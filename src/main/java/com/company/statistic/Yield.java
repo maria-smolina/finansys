@@ -4,17 +4,20 @@ import com.company.model.Security;
 import com.company.service.Checker;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Yield {
-    public static double averageYield(List<Security> securities) {
-        if (securities == null || securities.size() < 2) {
-            return 0.0;
+    public static double averageYieldForSecurities(List<Security> securities) {
+        List<Double> yields = yields(securities);
+        return averageYield(yields);
+    }
+
+    public static double averageYield(List<Double> yields) {
+        if (yields.size() == 0) {
+            throw new IllegalArgumentException("Empty securities list");
         }
-        double sum = 0.0;
-        for (int i = 1; i < securities.size(); i++) {
-            sum += yield(securities.get(i - 1), securities.get(i));
-        }
-        return sum / (securities.size() - 1);
+        return yields.stream().mapToDouble(t -> t).average().orElse(0.0);
     }
 
     public static double yield(Security s1, Security s2) {
@@ -26,4 +29,9 @@ public class Yield {
         return s2.getClose() / s1.getClose() - 1;
     }
 
+    public static List<Double> yields(List<Security> securities) {
+        return IntStream.range(1, securities.size())
+                .mapToObj(i -> yield(securities.get(i - 1), securities.get(i)))
+                .collect(Collectors.toList());
+    }
 }
