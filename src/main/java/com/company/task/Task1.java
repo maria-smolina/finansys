@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Task1 {
     public static void main(String[] args) {
-        String file = "build/resources/main/MOEX_170119_180119.csv";
+        String file = "build/resources/main/SBER_090119_180119.csv";
         Parser parser = new Parser();
         List<Stock> stocks = parser.csvToStock(file);
         List<Security> securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class Task1 {
         System.out.println("\nExpected shortfall, 5%: " + expectedShortfall);
 
         // correlation
-        file = "build/resources/main/MOEX_170119_180120.csv";
+        file = "build/resources/main/RI.MICEX10INDEX_090119_180119.csv";
         stocks = parser.csvToStock(file);
         securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
         List<Double> yields2 = Yield.yields(securities);

@@ -12,7 +12,7 @@ public class Stock {
     private String ticker;
 
     @CsvBindByName(column = "<PER>")
-    private long per;
+    private String per;
 
     @CsvBindByName(column = "<DATE>")
     @CsvDate("yyyyMMdd")

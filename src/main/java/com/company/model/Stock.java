@@ -12,7 +12,7 @@ import java.util.Date;
 public class Stock implements Security {
     private String ticker;
 
-    private long per;
+    private String per;
 
     private LocalDateTime time;
 

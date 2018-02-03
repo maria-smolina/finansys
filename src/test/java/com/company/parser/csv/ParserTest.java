@@ -16,13 +16,13 @@ import static org.junit.Assert.assertEquals;
 public class ParserTest {
     @Test
     public void csvToStockTest() {
-        String file = "build/resources/test/MOEX_170119_180118.csv";
+        String file = "build/resources/test/MOEX_170119_170119.csv";
         Parser parser = new Parser();
         List<Stock> stocks = parser.csvToStock(file);
         assertEquals(1, stocks.size());
         Stock stock = stocks.get(0);
         assertEquals("MOEX", stock.getTicker());
-        assertEquals(60L, stock.getPer());
+        assertEquals("60", stock.getPer());
         assertEquals(LocalDateTime.of(2017, 1, 19, 11, 0),
                 getLocalDateTime(stock.getDate(), stock.getTime()));
         assertEquals(131.77, stock.getOpen(), 0);
