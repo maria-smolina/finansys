@@ -20,6 +20,7 @@ public class RiskTest {
         securities.add(new SecurityMock(135.74));
         securities.add(new SecurityMock(133.3781));
         securities.add(new SecurityMock(138.0));
-        Assert.assertEquals(0.00067737329, Risk.dispersion(securities), 1E-10);
+        List<Double> yeilds = Yield.yields(securities);
+        Assert.assertEquals(0.00067737329, Risk.dispersion(yeilds), 1E-10);
     }
 }
