@@ -1,6 +1,5 @@
 package com.company.parser.csv;
 
-import com.company.model.Security;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
 import lombok.Data;
@@ -8,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Stock implements Security {
+public class Stock {
     @CsvBindByName(column = "<TICKER>")
     private String ticker;
 

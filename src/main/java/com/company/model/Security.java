@@ -1,5 +1,5 @@
 package com.company.model;
 
 public interface Security {
-    double getClose();
+    double getPrice();
 }

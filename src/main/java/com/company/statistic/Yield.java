@@ -24,9 +24,9 @@ public class Yield {
         if (s1 == null || s2 == null) {
             throw new IllegalArgumentException("Price is null");
         }
-        Checker.checkPriceRange(s1.getClose());
-        Checker.checkPriceRange(s2.getClose());
-        return s2.getClose() / s1.getClose() - 1;
+        Checker.checkPriceRange(s1.getPrice());
+        Checker.checkPriceRange(s2.getPrice());
+        return s2.getPrice() / s1.getPrice() - 1;
     }
 
     public static List<Double> yields(List<Security> securities) {

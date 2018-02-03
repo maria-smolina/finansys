@@ -1,6 +1,7 @@
 package com.company.statistic;
 
 import com.company.model.Security;
+import com.company.model.SecurityMock;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,19 +78,30 @@ public class YieldTest {
         Assert.assertEquals(-0.98992662555, Yield.yield(s1, s2), 1E-10);
     }
 
-    private static class SecurityMock implements Security {
-        private double close = 0.0;
+    @Test
+    public void yieldsTest() {
+        List<Security> securities = new ArrayList<>();
+        securities.add(new SecurityMock(135.74));
+        securities.add(new SecurityMock(139.56));
+        securities.add(new SecurityMock(11.74));
+        List<Double> yields = Yield.yields(securities);
+        Assert.assertEquals(2, yields.size());
+        Assert.assertEquals(0.02814203624, yields.get(0), 1E-10);
+        Assert.assertEquals(-0.9158784752, yields.get(1), 1E-10);
+    }
 
-        public SecurityMock() {
-        }
+    @Test
+    public void noYieldsTest() {
+        List<Security> securities = new ArrayList<>();
+        List<Double> yields = Yield.yields(securities);
+        Assert.assertEquals(0, yields.size());
+    }
 
-        public SecurityMock(double close) {
-            this.close = close;
-        }
-
-        @Override
-        public double getClose() {
-            return close;
-        }
+    @Test
+    public void oneYieldTest() {
+        List<Security> securities = new ArrayList<>();
+        securities.add(new SecurityMock(11.74));
+        List<Double> yields = Yield.yields(securities);
+        Assert.assertEquals(0, yields.size());
     }
 }

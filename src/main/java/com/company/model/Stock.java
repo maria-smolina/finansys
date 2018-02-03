@@ -37,6 +37,11 @@ public class Stock implements Security {
         volume = stock.getVolume();
     }
 
+    @Override
+    public double getPrice() {
+        return close;
+    }
+
     public static LocalDateTime getLocalDateTime(Date date, Date time) {
         if (date == null || time == null) {
             return null;

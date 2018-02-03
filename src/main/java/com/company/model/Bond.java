@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Bond implements Security {
 
-    private double close;
+    private double price;
 }
