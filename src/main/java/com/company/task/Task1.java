@@ -4,7 +4,7 @@ import com.company.model.Security;
 import com.company.parser.csv.Parser;
 import com.company.parser.csv.Stock;
 import com.company.statistic.ExpectedShortfall;
-import com.company.statistic.Risk;
+import com.company.statistic.Statistic;
 import com.company.statistic.VAR;
 import com.company.statistic.Yield;
 
@@ -28,7 +28,7 @@ public class Task1 {
         // average yield, volatility
         double averageYield = Yield.averageYield(yields);
         System.out.println("\nAverage yield: " + averageYield);
-        double volatility = Risk.standardDeviation(yields);
+        double volatility = Statistic.standardDeviation(yields);
         System.out.println("\nVolatility: " + volatility);
 
         // historical var
@@ -58,6 +58,6 @@ public class Task1 {
         stocks = parser.csvToStock(file);
         securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
         List<Double> yields2 = Yield.yields(securities);
-        System.out.println("\nCorrelation: " + Risk.correlation(yields, yields2));
+        System.out.println("\nCorrelation: " + Statistic.correlation(yields, yields2));
     }
 }

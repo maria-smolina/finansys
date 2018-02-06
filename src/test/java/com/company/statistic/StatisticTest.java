@@ -13,7 +13,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RiskTest {
+public class StatisticTest {
     @Test
     public void dispersionTest() {
         List<Security> securities = new ArrayList<>();
@@ -21,6 +21,6 @@ public class RiskTest {
         securities.add(new SecurityMock(133.3781));
         securities.add(new SecurityMock(138.0));
         List<Double> yeilds = Yield.yields(securities);
-        Assert.assertEquals(0.00067737329, Risk.dispersion(yeilds), 1E-10);
+        Assert.assertEquals(0.00067737329, Statistic.dispersion(yeilds), 1E-10);
     }
 }

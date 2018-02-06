@@ -1,7 +1,15 @@
 package com.company.task;
 
+import com.company.model.Security;
+import com.company.parser.csv.Parser;
+import com.company.parser.csv.Stock;
 import com.company.statistic.FRA;
 import com.company.statistic.ForwardRate;
+import com.company.statistic.HedgeRatio;
+import com.company.statistic.Yield;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Task2 {
     private static final double MONTH = 1./12;
@@ -76,6 +84,23 @@ public class Task2 {
         System.out.println("\nFRA 3x6: " + fra3x6);
         double spotRate3x6 = 0.1010;
         System.out.println("Spot rate: " + spotRate3x6);
+
+        // Hedge ratio
+        String file = "build/resources/main/SBER_090119_180119.csv";
+        Parser parser = new Parser();
+        List<Stock> stocks = parser.csvToStock(file);
+        List<Security> securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
+        List<Double> spot = Yield.yields(securities);
+        file = "build/resources/main/RI.MICEX10INDEX_090119_180119.csv";
+        stocks = parser.csvToStock(file);
+        securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
+        List<Double> forward = Yield.yields(securities);
+
+        double hedgeRatio = HedgeRatio.hedgeRatio(spot, forward);
+        System.out.println("Hedge ratio: " + hedgeRatio);
+
+        hedgeRatio = HedgeRatio.hedgeRatio(forward, spot);
+        System.out.println("Hedge ratio conversely: " + hedgeRatio);
 
     }
 }

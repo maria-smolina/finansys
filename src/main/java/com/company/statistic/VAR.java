@@ -19,12 +19,12 @@ public class VAR {
     }
 
     public static double parametric95VAR(List<Double> yields, long days) {
-        double var = Risk.standardDeviation(yields) * Math.pow(days, 0.5) * STANDARD_DEVIATION_FOR_95_PERCENT;
+        double var = Statistic.standardDeviation(yields) * Math.pow(days, 0.5) * STANDARD_DEVIATION_FOR_95_PERCENT;
         return Math.abs(var);
     }
 
     public static double parametric99VAR(List<Double> yields, long days) {
-        double var = Risk.standardDeviation(yields) * Math.pow(days, 0.5) * STANDARD_DEVIATION_FOR_99_PERCENT;
+        double var = Statistic.standardDeviation(yields) * Math.pow(days, 0.5) * STANDARD_DEVIATION_FOR_99_PERCENT;
         return Math.abs(var);
     }
 }

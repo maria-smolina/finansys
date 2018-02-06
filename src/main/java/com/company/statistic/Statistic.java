@@ -4,7 +4,7 @@ import java.util.List;
 
 import static com.company.statistic.Yield.averageYield;
 
-public class Risk {
+public class Statistic {
     public static double standardDeviation(List<Double> yields) {
         return Math.pow(dispersion(yields), 0.5);
     }
