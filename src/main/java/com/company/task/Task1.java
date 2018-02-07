@@ -1,63 +1,57 @@
 package com.company.task;
 
-import com.company.model.Security;
-import com.company.parser.csv.Parser;
-import com.company.parser.csv.Stock;
 import com.company.statistic.ExpectedShortfall;
 import com.company.statistic.Statistic;
 import com.company.statistic.VAR;
 import com.company.statistic.Yield;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.PrintStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import static com.company.FinansysApplication.DF;
+
+@Slf4j
 public class Task1 {
-    public static void main(String[] args) {
-        String file = "build/resources/main/SBER_090119_180119.csv";
-        Parser parser = new Parser();
-        List<Stock> stocks = parser.csvToStock(file);
-        List<Security> securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
-
+    public static void run(List<Double> yields, List<Double> yields2,
+                           PrintStream outForYields, PrintStream out) {
+        log.info("Task1 is executing");
         // yields
-        System.out.println("Yields:");
-        List<Double> yields = Yield.yields(securities);
+        outForYields.println("Yields:");
         for (Double yield : yields) {
-            System.out.println(String.format("%.5f", yield));
+            outForYields.println(DF.format(yield));
         }
 
         // average yield, volatility
         double averageYield = Yield.averageYield(yields);
-        System.out.println("\nAverage yield: " + averageYield);
+        out.println("Average yield: " + DF.format(averageYield));
         double volatility = Statistic.standardDeviation(yields);
-        System.out.println("\nVolatility: " + volatility);
+        out.println("\nVolatility: " + DF.format(volatility));
 
         // historical var
         double historicalVAR99percent = VAR.historicalVAR(yields, 251, 0.01);
-        System.out.println("\nHistorical VAR for 251 days, 1%: " + historicalVAR99percent);
+        out.println("\nHistorical VAR for 251 days, 1%: " + DF.format(historicalVAR99percent));
         double historicalVAR95percent = VAR.historicalVAR(yields, 1255, 0.05);
-        System.out.println("\nHistorical VAR for 1255 days, 5%: " + historicalVAR95percent);
+        out.println("\nHistorical VAR for 1255 days, 5%: " + DF.format(historicalVAR95percent));
 
         // 1 day parametric var
         double parametric1dayVAR99percent = VAR.parametric99VAR(yields, 1);
-        System.out.println("\nParametric 1 day VAR, 1%: " + parametric1dayVAR99percent);
+        out.println("\nParametric 1 day VAR, 1%: " + DF.format(parametric1dayVAR99percent));
         double parametric1dayVAR95percent = VAR.parametric95VAR(yields, 1);
-        System.out.println("\nParametric 1 day VAR, 5%: " + parametric1dayVAR95percent);
+        out.println("\nParametric 1 day VAR, 5%: " + DF.format(parametric1dayVAR95percent));
 
         // 10 days parametric var
         double parametric10dayVAR99percent = VAR.parametric99VAR(yields, 10);
-        System.out.println("\nParametric 10 days VAR, 1%: " + parametric10dayVAR99percent);
+        out.println("\nParametric 10 days VAR, 1%: " + DF.format(parametric10dayVAR99percent));
         double parametric10dayVAR95percent = VAR.parametric95VAR(yields, 10);
-        System.out.println("\nParametric 10 days VAR, 5%: " + parametric10dayVAR95percent);
+        out.println("\nParametric 10 days VAR, 5%: " + DF.format(parametric10dayVAR95percent));
 
         // expected shortfall
         double expectedShortfall = ExpectedShortfall.expectedShortfall(yields, 1255, 0.05);
-        System.out.println("\nExpected shortfall, 5%: " + expectedShortfall);
+        out.println("\nExpected shortfall, 5%: " + DF.format(expectedShortfall));
 
         // correlation
-        file = "build/resources/main/RI.MICEX10INDEX_090119_180119.csv";
-        stocks = parser.csvToStock(file);
-        securities = stocks.stream().map(com.company.model.Stock::new).collect(Collectors.toList());
-        List<Double> yields2 = Yield.yields(securities);
-        System.out.println("\nCorrelation: " + Statistic.correlation(yields, yields2));
+        out.println("\nCorrelation: " + DF.format(Statistic.correlation(yields, yields2)));
+        log.info("Task1 finished");
     }
 }
