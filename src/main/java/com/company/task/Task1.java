@@ -13,8 +13,7 @@ import static com.company.FinansysApplication.DF;
 
 @Slf4j
 public class Task1 {
-    public static void run(List<Double> yields, List<Double> yields2,
-                           PrintStream outForYields, PrintStream out) {
+    public static void run(List<Double> yields, PrintStream outForYields, PrintStream out) {
         log.info("Task1 is executing");
         // yields
         outForYields.println("Yields:");
@@ -49,9 +48,11 @@ public class Task1 {
         // expected shortfall
         double expectedShortfall = ExpectedShortfall.expectedShortfall(yields, 1255, 0.05);
         out.println("\nExpected shortfall, 5%: " + DF.format(expectedShortfall));
+    }
 
+    public static void correlation(List<Double> yields, List<Double> yields2, PrintStream out) {
         // correlation
-        out.println("\nCorrelation: " + DF.format(Statistic.correlation(yields, yields2)));
+        out.println("Correlation: " + DF.format(Statistic.correlation(yields, yields2)));
         log.info("Task1 finished");
     }
 }

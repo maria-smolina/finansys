@@ -38,14 +38,27 @@ public class FinansysApplication {
         file = "libor.csv";
         HalfYearRate libor = parser.csvToHalfYearRate(file);
 
-        File task1File = new File("task1.txt");
-        task1File.createNewFile();
-        File task1YieldsFile = new File("task1_yields.txt");
-        task1File.createNewFile();
-        File task2File = new File("task2.txt");
-        task2File.createNewFile();
+        File fileRow1 = new File("task1_row1.txt");
+        fileRow1.createNewFile();
+        File fileYields1 = new File("task1_yields1.txt");
+        fileYields1.createNewFile();
 
-        Task1.run(yields, yields2, new PrintStream(task1YieldsFile), new PrintStream(task1File));
-		Task2.run(yields, yields2, new PrintStream(task2File), mosprime, libor);
+        Task1.run(yields, new PrintStream(fileYields1), new PrintStream(fileRow1));
+
+        File fileRow2 = new File("task1_row2.txt");
+        fileRow2.createNewFile();
+        File fileYelds2 = new File("task1_yields2.txt");
+        fileYelds2.createNewFile();
+
+        Task1.run(yields2, new PrintStream(fileYelds2), new PrintStream(fileRow2));
+
+        File correlationFile = new File("task1_correlation.txt");
+        correlationFile.createNewFile();
+        Task1.correlation(yields, yields2, new PrintStream(correlationFile));
+
+        File fileTask2 = new File("task2.txt");
+        fileTask2.createNewFile();
+
+		Task2.run(yields, yields2, new PrintStream(fileTask2), mosprime, libor);
 	}
 }
